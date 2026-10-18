@@ -4,16 +4,14 @@
 
 setup_commands:
   - "pip install -r requirements.txt"
-  # - add every other setup step here, in order (env vars, downloads, etc.)
+  - "docker compose up -d"
 
 run_commands:
-  - "python src/main.py --help"
-  # - the real command(s) that actually run your solution
+  - "python src/ingest.py --corpus data/corpus/ --out data/chunks.json"
+  - "python src/index.py --chunks data/chunks.json"
+  - "python src/retrieve.py --query 'refrigerant charge procedure for 48AJ060' --top-k 5"
 
-test_commands: []
-  # optional -- commands that run your own tests/checks, if you have any
+test_commands:
+  - "python src/eval.py --top-k 5 --out results/eval_results.json"
 
-notes: ""
-  # anything we should know before running this (e.g. "needs a GPU",
-  # "takes about 10 minutes", "expects a sample dataset already present
-  # under data/, see docs/ for where to get it")
+notes: "Requires Docker for Elasticsearch. Ingest takes ~5 min for 15 PDFs. Index build takes ~2 min (CPU embeddings). Eval runs 40 questions against live ES. No GPU needed."
