@@ -19,8 +19,10 @@ import argparse
 import logging
 from typing import Optional
 
+import torch
 from elasticsearch import Elasticsearch
 from sentence_transformers import SentenceTransformer
+from transformers import AutoModelForMaskedLM, AutoTokenizer
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s  %(levelname)-8s  %(message)s")
 logger = logging.getLogger(__name__)
@@ -28,8 +30,11 @@ logger = logging.getLogger(__name__)
 ES_URL = "http://localhost:9200"
 INDEX_BM25 = "hvac_bm25"
 INDEX_KNN = "hvac_knn"
+INDEX_SPARSE = "hvac_sparse"
 EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+SPLADE_MODEL = "naver/splade-cocondenser-selfdistil"
 RRF_K = 60
+SPLADE_TOPK = 64
 
 def _get_client() -> Elasticsearch:
     return Elasticsearch(ES_URL)
@@ -65,6 +70,27 @@ def _knn_search(client: Elasticsearch, embedding: list[float], top_k: int, model
         body={"knn": knn_query, "size": top_k},
     )["hits"]["hits"]
 
+def _splade_query_vec(query: str, tokenizer, model, topk: int) -> dict:
+    inputs = tokenizer(query, return_tensors="pt", truncation=True, max_length=128)
+    with torch.no_grad():
+        logits = model(**inputs).logits
+    vec = torch.log(1 + torch.relu(logits)).max(dim=1).values.squeeze()
+    nonzero = (vec > 0).sum().item()
+    vals, idxs = torch.topk(vec, k=min(topk, nonzero))
+    tokens = tokenizer.convert_ids_to_tokens(idxs.tolist())
+    return {t: float(v) for t, v in zip(tokens, vals.tolist()) if "." not in t}
+
+def _sparse_search(client: Elasticsearch, query_vec: dict, top_k: int, model_filter: Optional[str] = None) -> list[dict]:
+    should = [
+        {"rank_feature": {"field": f"sparse_tokens.{token}", "boost": weight}}
+        for token, weight in query_vec.items()
+    ]
+    q: dict = {"bool": {"should": should, "minimum_should_match": 1}}
+    body: dict = {"query": q, "size": top_k}
+    if model_filter:
+        body["query"] = {"bool": {"must": [q, {"term": {"model_numbers": model_filter}}]}}
+    return client.search(index=INDEX_SPARSE, body=body)["hits"]["hits"]
+
 def _rrf_merge(*hit_lists: list[dict], top_k: int, k: int = RRF_K) -> list[dict]:
     """
     Reciprocal Rank Fusion across ranked lists.
@@ -82,17 +108,26 @@ def _rrf_merge(*hit_lists: list[dict], top_k: int, k: int = RRF_K) -> list[dict]
     ranked = sorted(scores.items(), key=lambda x: x[1], reverse=True)[:top_k]
     return [{"chunk_id": cid, "score": sc, **docs[cid]} for cid, sc in ranked]
 
-def retrieve(query: str, top_k: int = 5, strategy: str = "best_fields", model_filter: Optional[str] = None) -> list[dict]:
+def retrieve(query: str, top_k: int = 5, strategy: str = "best_fields", model_filter: Optional[str] = None, use_sparse: bool = True) -> list[dict]:
     client = _get_client()
-    model = SentenceTransformer(EMBED_MODEL)
-
-    embedding = model.encode(query, normalize_embeddings=True).tolist()
     candidate_k = top_k * 3
+
+    dense_model = SentenceTransformer(EMBED_MODEL)
+    embedding = dense_model.encode(query, normalize_embeddings=True).tolist()
 
     bm25_hits = _bm25_search(client, query, candidate_k, strategy, model_filter)
     knn_hits = _knn_search(client, embedding, candidate_k, model_filter)
-    logger.info(f"BM25({strategy}): {len(bm25_hits)}  KNN: {len(knn_hits)}")
 
+    if use_sparse:
+        tokenizer = AutoTokenizer.from_pretrained(SPLADE_MODEL)
+        splade_model = AutoModelForMaskedLM.from_pretrained(SPLADE_MODEL)
+        splade_model.eval()
+        query_vec = _splade_query_vec(query, tokenizer, splade_model, SPLADE_TOPK)
+        sparse_hits = _sparse_search(client, query_vec, candidate_k, model_filter)
+        logger.info(f"BM25: {len(bm25_hits)}  KNN: {len(knn_hits)}  SPLADE: {len(sparse_hits)}")
+        return _rrf_merge(bm25_hits, knn_hits, sparse_hits, top_k=top_k)
+
+    logger.info(f"BM25: {len(bm25_hits)}  KNN: {len(knn_hits)}")
     return _rrf_merge(bm25_hits, knn_hits, top_k=top_k)
 
 if __name__ == "__main__":
@@ -101,9 +136,10 @@ if __name__ == "__main__":
     parser.add_argument("--top-k", type=int, default=5)
     parser.add_argument("--strategy", choices=["match", "best_fields"], default="best_fields")
     parser.add_argument("--model-filter", default=None)
+    parser.add_argument("--no-sparse", action="store_true")
     args = parser.parse_args()
 
-    results = retrieve(args.query, args.top_k, args.strategy, args.model_filter)
+    results = retrieve(args.query, args.top_k, args.strategy, args.model_filter, use_sparse=not args.no_sparse)
     for i, r in enumerate(results, 1):
         print(f"\n--- Result {i} (score={r['score']:.4f}) ---")
         print(f"Doc: {r['doc_id']}  Page: {r['page']}  Section: {r['section_title']}")

@@ -2,7 +2,7 @@
 Evaluation: recall@K, MRR, wrong-variant@1 on 40 verified HVAC questions.
 
 Two metrics reported:
-  doc_hit: doc_id in top-K (our primary; catches wrong-variant failures)
+  doc_hit: doc_id in top-K (primary; catches wrong-variant failures)
   ibm_hit: expected_answer substring in any top-K chunk text (Pipeline's metric, for comparability)
 
 Usage:
@@ -45,7 +45,7 @@ def _ibm_substring_hit(results: list[dict], expected_answer: str) -> bool:
 def _wrong_variant_at_1(results: list[dict], gold_doc: str) -> bool:
     return bool(results) and results[0]["doc_id"] != gold_doc
 
-def run_eval(top_k: int = 5, strategy: str = "best_fields", out_path: Path | None = None) -> dict:
+def run_eval(top_k: int = 5, strategy: str = "best_fields", use_sparse: bool = True, out_path: Path | None = None) -> dict:
     questions = _load_questions(EVAL_PATH)
     logger.info(f"Loaded {len(questions)} questions  top_k={top_k}  strategy={strategy}")
 
@@ -61,7 +61,7 @@ def run_eval(top_k: int = 5, strategy: str = "best_fields", out_path: Path | Non
         logger.info(f"[{i+1}/{len(questions)}] {qtype}: {query[:70]}")
 
         try:
-            results = retrieve(query, top_k=top_k, strategy=strategy)
+            results = retrieve(query, top_k=top_k, strategy=strategy, use_sparse=use_sparse)
         except Exception as e:
             logger.error(f"  Error: {e}")
             results = []
@@ -131,6 +131,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--top-k", type=int, default=5)
     parser.add_argument("--strategy", choices=["match", "best_fields"], default="best_fields")
+    parser.add_argument("--no-sparse", action="store_true")
     parser.add_argument("--out", type=Path, default=Path("results/eval_results.json"))
     args = parser.parse_args()
-    run_eval(args.top_k, args.strategy, args.out)
+    run_eval(args.top_k, args.strategy, use_sparse=not args.no_sparse, out_path=args.out)
