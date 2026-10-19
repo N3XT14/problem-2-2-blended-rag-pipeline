@@ -65,6 +65,11 @@ Success criterion: the right page of the right model's manual appears in top-k, 
 
 ---
 
+## Full WorkFlow
+![Workflow Diagram](<Blended RAG pipeline.drawio.png>)
+
+---
+
 ## What BM25 + KNN Got Right
 
 Both strategies tested: `match` (single field) and `best_fields` (text + section_title^2 + model_numbers).
@@ -175,8 +180,15 @@ Full eval results: `results/eval_baseline_best_fields.json`, `results/eval_basel
 
 ---
 
+## Scale
+
+Retrieval scales — Elasticsearch handles millions of documents via sharding and replication, the query path stays fast. The bottleneck is indexing: SPLADE encoding takes ~15 min for 2852 chunks on CPU. At 100K chunks that would be several hours. GPU (auto-detected via CUDA) or distributed encoding would be needed at that scale. The architecture is correct, the indexing throughput needs hardware to match corpus size.
+
+---
+
 ## What's Left
 
 - **wrong_variant@1 = 0.325** — model metadata filter would hard-route queries to the right manual. Target <0.15.
+- **SPLADE indexing throughput** — 15 min for 2852 chunks on CPU, needs GPU or batch parallelism at larger scale
 - **CLIP not wired for vision** — manuals have wiring diagrams, image retrieval not implemented
 - **Query classifier** — route lookup queries to BM25-heavy, conceptual to KNN-heavy automatically, rather than running both strategies and picking
