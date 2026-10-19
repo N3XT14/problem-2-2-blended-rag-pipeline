@@ -1,10 +1,7 @@
-# Fill this in before you submit -- our evaluator runs these commands
-# EXACTLY as written, in this order, from a fresh checkout of your fork.
-# Keep every command non-interactive (no prompts) and idempotent.
-
 setup_commands:
   - "pip install -r requirements.txt"
   - "docker compose up -d"
+  - "docker compose wait elasticsearch || sleep 30"
 
 run_commands:
   - "python src/ingest.py --corpus data/corpus/ --out data/chunks.json"
@@ -12,6 +9,6 @@ run_commands:
   - "python src/retrieve.py --query 'refrigerant charge procedure for 48AJ060' --top-k 5"
 
 test_commands:
-  - "python src/eval.py --top-k 5 --out results/eval_results.json"
+  - "python src/eval.py --top-k 5 --strategy best_fields --out results/eval_results.json"
 
-notes: "Requires Docker for Elasticsearch. Ingest takes ~5 min for 15 PDFs. Index build takes ~2 min (CPU embeddings). Eval runs 40 questions against live ES. No GPU needed."
+notes: "Requires Docker for Elasticsearch 9.0.3. PDFs are in data/corpus/ (15 files, committed). Ingest ~2 min. Index build ~15 min on CPU or ~2 min on GPU (code auto-detects CUDA via torch.cuda.is_available()). Eval ~2 min. GPU path not tested — requires Docker and CUDA on the same machine."

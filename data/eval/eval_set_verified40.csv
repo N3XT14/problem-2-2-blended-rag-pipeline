@@ -1,0 +1,41 @@
+question,question_type,doc_id,doc_chunk_index,section,expected_answer,_category,_rank
+"If a T-56 set point override sensor is used, which connection on the sensor is connected to T3 on the base control board?",lookup,23690,72,age of voltage imbalance.,override connection SW,not_retrieved,
+What does the code 'H' represent in the model number description?,lookup,14904,3,Model Number Descriptions - 3 to 10 Tons (T/Y),"Clogged Filter Switch, Fan Failure Switch, Discharge Air Sensing, and Condensate Drain Pan Overflow Switch",not_retrieved,
+"Which controller can connect the rooftop unit to an existing BAS without translators or adapter modules and supports BACnet, Modbus, N2, and LonWorks?",lookup,23407,28,Options and accessories,RTU Open controller,not_retrieved,
+What is the standard spacing of the coated inlet grille on this model?,lookup,23774,1,Document,2” (51mm),not_retrieved,
+Which accessory is required to achieve low ambient cooling down to 0°F?,lookup,16228,1,Benefits,BAYLOAM103,not_retrieved,
+Which thermostat inputs are used to control the unit according to this manual?,lookup,23690,46,default set points of 90 F cooling and 55 F heating.,"Y1, Y2, W1, W2, and G",not_retrieved,
+How thick are the standard factory-installed throwaway fiberglass filters in the filter section?,lookup,23717,408,GUIDE SPECS COBRA,2-in. thick,not_retrieved,
+"Identify the model(s) that have an input capacity of 72,000 BTU and a minimum heating airflow of 1000 CFM.",reasoning,23717,25,ARI CAPACITY RATINGS,"H004, G005",not_retrieved,
+What is the shipping weight of model 4TTB3060D1?,lookup,16228,3,Product Specifications,261,not_retrieved,
+"After verifying that the burners and evaporator fan turn off when lowering the thermostat, under what condition will the fan turn off according to this manual?",reasoning,19138,73,Document,The fan will turn off only if the fan selector switch is in the AUTO position.,not_retrieved,
+Which models have a line size (O.D. Gas) of 7/8 inches?,lookup,16228,3,Product Specifications,"4TTB3048D1, 4TTB3060D1",not_retrieved,
+What is the power supply code for 208-230/1/60 in this model nomenclature?,trap,16228,8,Nomenclature,1,not_retrieved,
+Which speed (torque) tap provides an ESP of 0.47 at 1200 CFM?,lookup,23407,64,Fan data,Tap 2,rank_6_10,6
+At which speed (torque) tap does the unit first reach a CFM of 1800 with a non-blank ESP value?,reasoning,23407,64,Fan data,Tap 4,rank_6_10,8
+After how many hours of operation should a new belt be tensioned?,lookup,14300,76,1−Blower Wheels,24−48 hours,rank_6_10,9
+Which unit has a steady state efficiency of 81.0% and a temperature rise range of 35-65°F?,trap,23717,25,ARI CAPACITY RATINGS,H006,rank_6_10,6
+What is the voltage output range of the supply duct static pressure transducer?,lookup,14904,166,Unit Start-Up,0.25 to 2.125 Vdc,rank_6_10,10
+What is the minimum communication Baud rate required for the PremierLink™ controller to be considered Internet capable?,trap,23720,135,Guide specifications,38.4K,rank_6_10,10
+What is the required manifold pressure for high fire operation in this unit?,lookup,19138,73,Document,3.5 in. wg,rank_6_10,9
+What is the model number referenced in this pressure curve section?,trap,23746,20,Pressure Curves,TC-SVF06B-EN,rank_6_10,10
+What is the factory-set option for Humiditrol unit reheat control parameter 4.24?,lookup,14300,154,"LGC156H, 180H, 210H & 300S",Option 6,top5,1
+"For model *180 at 7200 m3/h airflow, what is the static pressure drop across the 54 kW electric heater?",lookup,23281,18,Evaporator Fan Preformance,0.12,top5,1
+What type of shield is required for the cable according to the manual?,lookup,23690,76,Shielded Cables,Aluminum/polyester 100% foil shield,top5,3
+Describe the wiring connection for each freezestat in these units.,lookup,14300,70,B−Cooling Components,Each freezestat is wired to the main control module A55.,top5,3
+At what ambient temperature is cooling performance rated according to this manual section?,lookup,23281,14,Performance Data,95 F,top5,4
+What is the required shock resistance for the PremierLink™ controller during operation and storage?,lookup,23720,135,Guide specifications,"5G peak, 11ms during operation, and 100G peak, 11ms during storage",top5,2
+Which compressor does the UCP start upon each power initialization?,lookup,23267,14,Sequence of Operation,Number one circuit compressor,top5,3
+What is the direction to turn the adjusting bolt to tighten the belt on the LGC090/150 blower assembly?,trap,14300,76,1−Blower Wheels,"To the right, or clockwise",top5,1
+Which accessory allows a service technician to locally secure power to the rooftop and is OSHA-compliant?,lookup,23407,28,Options and accessories,Factory-installed safety switch,top5,4
+"According to the instructions, should refrigerant be added if the superheat is less than 5°F?",lookup,23746,20,Pressure Curves,"No, do not add refrigerant if the superheat is less than 5°F.",top5,5
+What happens to the MWU setpoint on the RTAM board when an LCI is installed on a VAV unit?,trap,14904,166,Unit Start-Up,The MWU setpoint located on the RTAM board is ignored.,top5,1
+Which code in the model number indicates the presence of Demand Control Ventilation (CO2)?,lookup,14904,3,Model Number Descriptions - 3 to 10 Tons (T/Y),A,top5,1
+"For the 48AJ,AK,AW,AY020-050 units, how should the hood sides with slots be positioned in the two outer hood assemblies when mounted on the unit?",reasoning,23690,78,speed clips provided.,The hood sides with slots should be located adjacent to each other.,top5,1
+Which stocking location is specified for the manual with literature order number TC-SVF06B-EN?,lookup,23746,21,Refrigerant Circuit,Webb  Mason,top5,1
+What voltage and phase configuration is shown for model sizes 008-014 in the schematic?,lookup,23717,279,TYPICAL WIRING SCHEMATICS,460-3-60,top5,1
+"For the LGC156H and 180H units, which compressors should continue to operate and which should de-energize when the system is in reheat mode, and which LEDs should remain ON?",reasoning,14300,154,"LGC156H, 180H, 210H & 300S","Compressor 3 (cooling) should de-energize, compressors 1 and 2 (reheat) should continue to operate, and L14 and L30 LEDs should remain ON.",top5,2
+"If four temperature sensors are being averaged, how must they be wired according to the instructions?",reasoning,23690,72,age of voltage imbalance.,Sensors must be wired in multiples of 4 or 9,top5,3
+"For this model, what is the required action if the TCO1 value does not match the previous tables?",trap,14904,72,Installation,Replace TCO1 with the extra limit control shipped in the heater compartment.,top5,1
+What does the absence of a descriptor (no descriptor) indicate in this model nomenclature?,lookup,16228,8,Nomenclature,Air Handler / Coil,top5,1
+How does the T-56 sensor differ from the T-55 sensor in terms of features?,reasoning,23690,46,default set points of 90 F cooling and 55 F heating.,"The T-56 sensor provides a 5° F temperature offset in addition to monitoring room temperature and providing a 1-hour unoccupied override, while the T-55 only monitors room temperature and provides the 1-hour unoccupied override.",top5,3
