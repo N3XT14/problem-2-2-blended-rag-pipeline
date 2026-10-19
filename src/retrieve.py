@@ -71,7 +71,9 @@ def _knn_search(client: Elasticsearch, embedding: list[float], top_k: int, model
     )["hits"]["hits"]
 
 def _splade_query_vec(query: str, tokenizer, model, topk: int) -> dict:
+    device = next(model.parameters()).device
     inputs = tokenizer(query, return_tensors="pt", truncation=True, max_length=128)
+    inputs = {k: v.to(device) for k, v in inputs.items()}
     with torch.no_grad():
         logits = model(**inputs).logits
     vec = torch.log(1 + torch.relu(logits)).max(dim=1).values.squeeze()
@@ -108,20 +110,36 @@ def _rrf_merge(*hit_lists: list[dict], top_k: int, k: int = RRF_K) -> list[dict]
     ranked = sorted(scores.items(), key=lambda x: x[1], reverse=True)[:top_k]
     return [{"chunk_id": cid, "score": sc, **docs[cid]} for cid, sc in ranked]
 
+_dense_model = None
+_splade_tokenizer = None
+_splade_model = None
+
+def _load_dense():
+    global _dense_model
+    if _dense_model is None:
+        _dense_model = SentenceTransformer(EMBED_MODEL)
+    return _dense_model
+
+def _load_splade():
+    global _splade_tokenizer, _splade_model
+    if _splade_model is None:
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        _splade_tokenizer = AutoTokenizer.from_pretrained(SPLADE_MODEL)
+        _splade_model = AutoModelForMaskedLM.from_pretrained(SPLADE_MODEL).to(device)
+        _splade_model.eval()
+    return _splade_tokenizer, _splade_model
+
 def retrieve(query: str, top_k: int = 5, strategy: str = "best_fields", model_filter: Optional[str] = None, use_sparse: bool = True) -> list[dict]:
     client = _get_client()
     candidate_k = top_k * 3
 
-    dense_model = SentenceTransformer(EMBED_MODEL)
-    embedding = dense_model.encode(query, normalize_embeddings=True).tolist()
+    embedding = _load_dense().encode(query, normalize_embeddings=True).tolist()
 
     bm25_hits = _bm25_search(client, query, candidate_k, strategy, model_filter)
     knn_hits = _knn_search(client, embedding, candidate_k, model_filter)
 
     if use_sparse:
-        tokenizer = AutoTokenizer.from_pretrained(SPLADE_MODEL)
-        splade_model = AutoModelForMaskedLM.from_pretrained(SPLADE_MODEL)
-        splade_model.eval()
+        tokenizer, splade_model = _load_splade()
         query_vec = _splade_query_vec(query, tokenizer, splade_model, SPLADE_TOPK)
         sparse_hits = _sparse_search(client, query_vec, candidate_k, model_filter)
         logger.info(f"BM25: {len(bm25_hits)}  KNN: {len(knn_hits)}  SPLADE: {len(sparse_hits)}")

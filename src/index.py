@@ -163,11 +163,12 @@ def _sparse_actions(chunks: list[dict], sparse_vecs: list[dict]):
             },
         }
 
-def _splade_encode(texts: list[str], tokenizer, model, topk: int) -> list[dict]:
+def _splade_encode(texts: list[str], tokenizer, model, topk: int, device: str = "cpu") -> list[dict]:
     inputs = tokenizer(
         texts, return_tensors="pt", padding=True,
         truncation=True, max_length=512
     )
+    inputs = {k: v.to(device) for k, v in inputs.items()}
     with torch.no_grad():
         logits = model(**inputs).logits
     vecs = torch.log(1 + torch.relu(logits)).max(dim=1).values
@@ -209,15 +210,16 @@ def build_index(chunks_path: Path) -> None:
     success, errors = helpers.bulk(client, _knn_actions(chunks, embeddings), raise_on_error=False)
     logger.info(f"  KNN: {success} indexed, {len(errors)} errors")
 
-    logger.info(f"Loading SPLADE model: {SPLADE_MODEL}")
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    logger.info(f"Loading SPLADE model: {SPLADE_MODEL}  device={device}")
     tokenizer = AutoTokenizer.from_pretrained(SPLADE_MODEL)
-    splade_model = AutoModelForMaskedLM.from_pretrained(SPLADE_MODEL)
+    splade_model = AutoModelForMaskedLM.from_pretrained(SPLADE_MODEL).to(device)
     splade_model.eval()
 
     all_sparse: list[dict] = []
     for i in range(0, len(texts), BATCH_SIZE):
         batch = texts[i:i + BATCH_SIZE]
-        vecs = _splade_encode(batch, tokenizer, splade_model, SPLADE_TOPK)
+        vecs = _splade_encode(batch, tokenizer, splade_model, SPLADE_TOPK, device)
         all_sparse.extend(vecs)
         logger.info(f"  SPLADE {min(i + BATCH_SIZE, len(texts))}/{len(texts)}")
 
