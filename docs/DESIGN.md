@@ -182,13 +182,13 @@ Full eval results: `results/eval_results.json` (SPLADE+best_fields), `results/ev
 
 ## Scale
 
-Retrieval scales — Elasticsearch handles millions of documents via sharding and replication, the query path stays fast. The bottleneck is indexing: SPLADE encoding takes ~14 min for 2352 chunks on CPU. At 100K chunks that would be several hours. GPU (auto-detected via CUDA) or distributed encoding would be needed at that scale. The architecture is correct, the indexing throughput needs hardware to match corpus size.
+Retrieval scales — Elasticsearch handles millions of documents via sharding and replication, the query path stays fast. The bottleneck is indexing: SPLADE encoding takes ~17 min for 2352 chunks on CPU. At 100K chunks that would be several hours. GPU (auto-detected via CUDA) or distributed encoding would be needed at that scale. The architecture is correct, the indexing throughput needs hardware to match corpus size.
 
 ---
 
 ## What's Left
 
 - **wrong_variant@1 = 0.325** — model metadata filter would hard-route queries to the right manual. Target <0.15.
-- **SPLADE indexing throughput** — ~14 min for 2352 chunks on CPU, needs GPU or batch parallelism at larger scale
+- **SPLADE indexing throughput** — ~17 min for 2352 chunks on CPU, needs GPU or batch parallelism at larger scale
 - **CLIP not wired for vision** — manuals have wiring diagrams, image retrieval not implemented
 - **Query classifier** — route lookup queries to BM25-heavy, conceptual to KNN-heavy automatically, rather than running both strategies and picking
