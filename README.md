@@ -11,3 +11,7 @@
 Once you start the test you have until your test's time limit to complete the assignment — see your invitation email for the exact duration. We ignore any commits pushed to your repo after that.
 
 Questions? careers@aintropy.ai
+
+## Submission
+
+The actual submission is in the private repository: https://github.com/N3XT14/problem-2-2-blended-rag-pipeline-private
