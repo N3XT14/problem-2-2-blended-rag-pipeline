@@ -4,7 +4,7 @@
 
 An HVAC field technician standing at a unit, asking questions about that specific equipment.
 
-Knowledge base: manufacturer installation, service, and product-data manuals across several brands and product families — for the assement i gathered around 15 PDFs which provides 2852 chunks after ingestion. (these are public links)
+Knowledge base: manufacturer installation, service, and product-data manuals across several brands and product families — 15 PDFs yielding 2352 chunks after ingestion.
 
 Why this is hard:
 
@@ -74,13 +74,13 @@ Success criterion: the right page of the right model's manual appears in top-k, 
 
 Both strategies tested: `match` (single field) and `best_fields` (text + section_title^2 + model_numbers).
 
-- doc_recall@5: best_fields 0.950, match 0.925
-- MRR: best_fields 0.753, match 0.757
+- doc_recall@5: best_fields 0.875, match 0.850
+- MRR: best_fields 0.735, match 0.732
 - wrong_variant@1: both 0.350
 
 Reasoning questions (conceptual "why" queries): doc_recall = 1.0 on both. The dense KNN handles vocabulary mismatch well for open-ended questions.
 
-Lookup questions: recall 0.962, but wrong_variant@1 = 0.42 — the right section exists but it's from the sibling manual.
+Lookup questions: recall 0.923, but wrong_variant@1 = 0.385 — the right section exists but it's from the sibling manual.
 
 ---
 
@@ -142,16 +142,16 @@ Both retrieve the right answer. SPLADE additionally surfaces the same section fr
 ## Results After Adding SPLADE
 
 **best_fields strategy:**
-- doc_recall@5: 0.950 to **0.975** (+2.5pp)
-- MRR: 0.753 to **0.800** (+4.7pp)
+- doc_recall@5: 0.875 to **0.925** (+5.0pp)
+- MRR: 0.735 to **0.765** (+3.0pp)
 - wrong_variant@1: 0.350 to **0.325** (-2.5pp)
 
 **match strategy:**
-- doc_recall@5: 0.925 to **0.975** (+5.0pp)
-- MRR: 0.757 to **0.777** (+2.0pp)
-- wrong_variant@1: 0.350 to 0.350 (no change)
+- doc_recall@5: 0.850 to **0.925** (+7.5pp)
+- MRR: 0.732 to **0.765** (+3.3pp)
+- wrong_variant@1: 0.350 to **0.325** (-2.5pp)
 
-SPLADE closed the gap between the two strategies on recall — match was 2.5pp behind best_fields at baseline, both reach 0.975 with SPLADE. The vocabulary expansion compensated for the narrower single-field search in match.
+SPLADE closed the gap between the two strategies on recall — match was 2.5pp behind best_fields at baseline, both reach 0.925 with SPLADE. The vocabulary expansion compensated for the narrower single-field search in match.
 
 No query type regressed. The 3 demo queries confirm the pattern holds on real technician questions, not just benchmark statistics.
 
@@ -161,7 +161,7 @@ No query type regressed. The 3 demo queries confirm the pattern holds on real te
 
 IBM's metric asks: does the expected answer string appear word-for-word in a returned chunk? My solution asks: did the right document show up in top-5?
 
-ibm_recall@5 = 0.600, doc_recall@5 = 0.975 — a 37.5pp gap. The retrieval is working. The verbatim string isn't there because answers get paraphrased across PDFs, split across chunk boundaries, or live in table cells.
+ibm_recall@5 = 0.600, doc_recall@5 = 0.925 — a 32.5pp gap. The retrieval is working. The verbatim string isn't there because answers get paraphrased across PDFs, split across chunk boundaries, or live in table cells.
 
 The clearest example: reasoning questions score ibm_recall = 0.143 but doc_recall = 1.0. "Why does the compressor short-cycle" has no single chunk that contains the full answer verbatim and hence the answer requires reading across sections. IBM's metric says we failed. my solution retrieved the right manual every time.
 
@@ -176,19 +176,19 @@ Both are reported. doc_recall is the primary signal.
 - SPLADE model: `naver/splade-cocondenser-selfdistil` (Naver Labs, HuggingFace)
 - Dense model: `sentence-transformers/all-MiniLM-L6-v2`
 
-Full eval results: `results/eval_baseline_best_fields.json`, `results/eval_baseline_match.json`, `results/eval_splade_best_fields.json`, `results/eval_splade_match.json`
+Full eval results: `results/eval_results.json` (SPLADE+best_fields), `results/eval_match.json` (SPLADE+match), `results/eval_baseline_best_fields.json`, `results/eval_baseline_match.json`
 
 ---
 
 ## Scale
 
-Retrieval scales — Elasticsearch handles millions of documents via sharding and replication, the query path stays fast. The bottleneck is indexing: SPLADE encoding takes ~15 min for 2852 chunks on CPU. At 100K chunks that would be several hours. GPU (auto-detected via CUDA) or distributed encoding would be needed at that scale. The architecture is correct, the indexing throughput needs hardware to match corpus size.
+Retrieval scales — Elasticsearch handles millions of documents via sharding and replication, the query path stays fast. The bottleneck is indexing: SPLADE encoding takes ~14 min for 2352 chunks on CPU. At 100K chunks that would be several hours. GPU (auto-detected via CUDA) or distributed encoding would be needed at that scale. The architecture is correct, the indexing throughput needs hardware to match corpus size.
 
 ---
 
 ## What's Left
 
 - **wrong_variant@1 = 0.325** — model metadata filter would hard-route queries to the right manual. Target <0.15.
-- **SPLADE indexing throughput** — 15 min for 2852 chunks on CPU, needs GPU or batch parallelism at larger scale
+- **SPLADE indexing throughput** — ~14 min for 2352 chunks on CPU, needs GPU or batch parallelism at larger scale
 - **CLIP not wired for vision** — manuals have wiring diagrams, image retrieval not implemented
 - **Query classifier** — route lookup queries to BM25-heavy, conceptual to KNN-heavy automatically, rather than running both strategies and picking

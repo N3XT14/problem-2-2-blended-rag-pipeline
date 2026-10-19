@@ -1,5 +1,5 @@
 """
-Blended retriever: BM25 + dense KNN → RRF fusion.
+Blended retriever: BM25 + dense KNN + sparse Splade RRF fusion.
 
 Follows IBM's Blended-RAG architecture. Two query strategies:
   match: single field text match
@@ -80,7 +80,7 @@ def _splade_query_vec(query: str, tokenizer, model, topk: int) -> dict:
     nonzero = (vec > 0).sum().item()
     vals, idxs = torch.topk(vec, k=min(topk, nonzero))
     tokens = tokenizer.convert_ids_to_tokens(idxs.tolist())
-    return {t: float(v) for t, v in zip(tokens, vals.tolist()) if "." not in t}
+    return {t: float(v) for t, v in zip(tokens, vals.tolist()) if "." not in t and float(v) > 0}
 
 def _sparse_search(client: Elasticsearch, query_vec: dict, top_k: int, model_filter: Optional[str] = None) -> list[dict]:
     should = [

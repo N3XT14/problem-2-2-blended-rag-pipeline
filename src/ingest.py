@@ -80,7 +80,7 @@ def process_pdf(pdf_path: Path) -> list[dict]:
     logger.info(f"Processing {doc_id} ...")
 
     try:
-        pages = pymupdf4llm.to_markdown(str(pdf_path), page_chunks=True)
+        pages = pymupdf4llm.to_markdown(str(pdf_path), page_chunks=True, use_ocr=False)
     except Exception as e:
         logger.error(f"  Failed to parse {pdf_path}: {e}")
         return []
@@ -124,10 +124,14 @@ def process_pdf(pdf_path: Path) -> list[dict]:
             })
             idx += 1
 
-    logger.info(f"  → {len(chunks)} chunks")
+    logger.info(f"  Count {len(chunks)} chunks")
     return chunks
 
-def ingest(corpus_dir: Path, out_path: Path) -> list[dict]:
+def ingest(corpus_dir: Path, out_path: Path, force: bool = False) -> list[dict]:
+    if out_path.exists() and not force:
+        logger.info(f"chunks.json already exists — skipping ingest. Use --force to re-run.")
+        return json.loads(out_path.read_text())
+
     pdfs = sorted(corpus_dir.glob("*.pdf"))
     if not pdfs:
         logger.error(f"No PDFs found in {corpus_dir}")
@@ -140,12 +144,13 @@ def ingest(corpus_dir: Path, out_path: Path) -> list[dict]:
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(all_chunks, indent=2))
-    logger.info(f"Saved {len(all_chunks)} chunks → {out_path}")
+    logger.info(f"Saved {len(all_chunks)} chunks at {out_path}")
     return all_chunks
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--corpus", type=Path, default=Path("data/corpus/"))
     parser.add_argument("--out", type=Path, default=Path("data/chunks.json"))
+    parser.add_argument("--force", action="store_true", help="Re-run even if chunks.json exists")
     args = parser.parse_args()
-    ingest(args.corpus, args.out)
+    ingest(args.corpus, args.out, args.force)

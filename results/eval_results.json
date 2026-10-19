@@ -1,0 +1,476 @@
+{
+  "top_k": 5,
+  "strategy": "best_fields",
+  "overall": {
+    "n": 40,
+    "doc_recall@k": 0.925,
+    "ibm_recall@k": 0.6,
+    "mrr": 0.7654166666666666,
+    "wrong_v1_rate": 0.325
+  },
+  "by_type": {
+    "lookup": {
+      "n": 26,
+      "doc_recall@k": 0.9230769230769231,
+      "ibm_recall@k": 0.6923076923076923,
+      "mrr": 0.7224358974358975,
+      "wrong_v1_rate": 0.38461538461538464
+    },
+    "reasoning": {
+      "n": 7,
+      "doc_recall@k": 1.0,
+      "ibm_recall@k": 0.14285714285714285,
+      "mrr": 0.9285714285714286,
+      "wrong_v1_rate": 0.14285714285714285
+    },
+    "trap": {
+      "n": 7,
+      "doc_recall@k": 0.8571428571428571,
+      "ibm_recall@k": 0.7142857142857143,
+      "mrr": 0.7619047619047619,
+      "wrong_v1_rate": 0.2857142857142857
+    }
+  },
+  "records": [
+    {
+      "question": "If a T-56 set point override sensor is used, which connection on the sensor is connected to T3 on the base control board?",
+      "type": "lookup",
+      "gold_doc": "23690",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "23690"
+    },
+    {
+      "question": "What does the code 'H' represent in the model number description?",
+      "type": "lookup",
+      "gold_doc": "14904",
+      "doc_hit": true,
+      "ibm_hit": false,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "14904"
+    },
+    {
+      "question": "Which controller can connect the rooftop unit to an existing BAS without translators or adapter modules and supports BACnet, Modbus, N2, and LonWorks?",
+      "type": "lookup",
+      "gold_doc": "23407",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "23407"
+    },
+    {
+      "question": "What is the standard spacing of the coated inlet grille on this model?",
+      "type": "lookup",
+      "gold_doc": "23774",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "23774"
+    },
+    {
+      "question": "Which accessory is required to achieve low ambient cooling down to 0\u00b0F?",
+      "type": "lookup",
+      "gold_doc": "16228",
+      "doc_hit": false,
+      "ibm_hit": false,
+      "doc_rank": 0,
+      "rr": 0.0,
+      "wrong_v1": true,
+      "top1_doc": "23720"
+    },
+    {
+      "question": "Which thermostat inputs are used to control the unit according to this manual?",
+      "type": "lookup",
+      "gold_doc": "23690",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 4,
+      "rr": 0.25,
+      "wrong_v1": true,
+      "top1_doc": "14300"
+    },
+    {
+      "question": "How thick are the standard factory-installed throwaway fiberglass filters in the filter section?",
+      "type": "lookup",
+      "gold_doc": "23717",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 4,
+      "rr": 0.25,
+      "wrong_v1": true,
+      "top1_doc": "23407"
+    },
+    {
+      "question": "Identify the model(s) that have an input capacity of 72,000 BTU and a minimum heating airflow of 1000 CFM.",
+      "type": "reasoning",
+      "gold_doc": "23717",
+      "doc_hit": true,
+      "ibm_hit": false,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "23717"
+    },
+    {
+      "question": "What is the shipping weight of model 4TTB3060D1?",
+      "type": "lookup",
+      "gold_doc": "16228",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "16228"
+    },
+    {
+      "question": "After verifying that the burners and evaporator fan turn off when lowering the thermostat, under what condition will the fan turn off according to this manual?",
+      "type": "reasoning",
+      "gold_doc": "19138",
+      "doc_hit": true,
+      "ibm_hit": false,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "19138"
+    },
+    {
+      "question": "Which models have a line size (O.D. Gas) of 7/8 inches?",
+      "type": "lookup",
+      "gold_doc": "16228",
+      "doc_hit": true,
+      "ibm_hit": false,
+      "doc_rank": 2,
+      "rr": 0.5,
+      "wrong_v1": true,
+      "top1_doc": "14904"
+    },
+    {
+      "question": "What is the power supply code for 208-230/1/60 in this model nomenclature?",
+      "type": "trap",
+      "gold_doc": "16228",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "16228"
+    },
+    {
+      "question": "Which speed (torque) tap provides an ESP of 0.47 at 1200 CFM?",
+      "type": "lookup",
+      "gold_doc": "23407",
+      "doc_hit": true,
+      "ibm_hit": false,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "23407"
+    },
+    {
+      "question": "At which speed (torque) tap does the unit first reach a CFM of 1800 with a non-blank ESP value?",
+      "type": "reasoning",
+      "gold_doc": "23407",
+      "doc_hit": true,
+      "ibm_hit": false,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "23407"
+    },
+    {
+      "question": "After how many hours of operation should a new belt be tensioned?",
+      "type": "lookup",
+      "gold_doc": "14300",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 2,
+      "rr": 0.5,
+      "wrong_v1": true,
+      "top1_doc": "23690"
+    },
+    {
+      "question": "Which unit has a steady state efficiency of 81.0% and a temperature rise range of 35-65\u00b0F?",
+      "type": "trap",
+      "gold_doc": "23717",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "23717"
+    },
+    {
+      "question": "What is the voltage output range of the supply duct static pressure transducer?",
+      "type": "lookup",
+      "gold_doc": "14904",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "14904"
+    },
+    {
+      "question": "What is the minimum communication Baud rate required for the PremierLink\u2122 controller to be considered Internet capable?",
+      "type": "trap",
+      "gold_doc": "23720",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 3,
+      "rr": 0.3333333333333333,
+      "wrong_v1": true,
+      "top1_doc": "23717"
+    },
+    {
+      "question": "What is the required manifold pressure for high fire operation in this unit?",
+      "type": "lookup",
+      "gold_doc": "19138",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "19138"
+    },
+    {
+      "question": "What is the model number referenced in this pressure curve section?",
+      "type": "trap",
+      "gold_doc": "23746",
+      "doc_hit": false,
+      "ibm_hit": false,
+      "doc_rank": 0,
+      "rr": 0.0,
+      "wrong_v1": true,
+      "top1_doc": "23281"
+    },
+    {
+      "question": "What is the factory-set option for Humiditrol unit reheat control parameter 4.24?",
+      "type": "lookup",
+      "gold_doc": "14300",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "14300"
+    },
+    {
+      "question": "For model *180 at 7200 m3/h airflow, what is the static pressure drop across the 54 kW electric heater?",
+      "type": "lookup",
+      "gold_doc": "23281",
+      "doc_hit": true,
+      "ibm_hit": false,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "23281"
+    },
+    {
+      "question": "What type of shield is required for the cable according to the manual?",
+      "type": "lookup",
+      "gold_doc": "23690",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "23690"
+    },
+    {
+      "question": "Describe the wiring connection for each freezestat in these units.",
+      "type": "lookup",
+      "gold_doc": "14300",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "14300"
+    },
+    {
+      "question": "At what ambient temperature is cooling performance rated according to this manual section?",
+      "type": "lookup",
+      "gold_doc": "23281",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 5,
+      "rr": 0.2,
+      "wrong_v1": true,
+      "top1_doc": "23407"
+    },
+    {
+      "question": "What is the required shock resistance for the PremierLink\u2122 controller during operation and storage?",
+      "type": "lookup",
+      "gold_doc": "23720",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 2,
+      "rr": 0.5,
+      "wrong_v1": true,
+      "top1_doc": "23407"
+    },
+    {
+      "question": "Which compressor does the UCP start upon each power initialization?",
+      "type": "lookup",
+      "gold_doc": "23267",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "23267"
+    },
+    {
+      "question": "What is the direction to turn the adjusting bolt to tighten the belt on the LGC090/150 blower assembly?",
+      "type": "trap",
+      "gold_doc": "14300",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "14300"
+    },
+    {
+      "question": "Which accessory allows a service technician to locally secure power to the rooftop and is OSHA-compliant?",
+      "type": "lookup",
+      "gold_doc": "23407",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "23407"
+    },
+    {
+      "question": "According to the instructions, should refrigerant be added if the superheat is less than 5\u00b0F?",
+      "type": "lookup",
+      "gold_doc": "23746",
+      "doc_hit": true,
+      "ibm_hit": false,
+      "doc_rank": 3,
+      "rr": 0.3333333333333333,
+      "wrong_v1": true,
+      "top1_doc": "23267"
+    },
+    {
+      "question": "What happens to the MWU setpoint on the RTAM board when an LCI is installed on a VAV unit?",
+      "type": "trap",
+      "gold_doc": "14904",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "14904"
+    },
+    {
+      "question": "Which code in the model number indicates the presence of Demand Control Ventilation (CO2)?",
+      "type": "lookup",
+      "gold_doc": "14904",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 4,
+      "rr": 0.25,
+      "wrong_v1": true,
+      "top1_doc": "23720"
+    },
+    {
+      "question": "For the 48AJ,AK,AW,AY020-050 units, how should the hood sides with slots be positioned in the two outer hood assemblies when mounted on the unit?",
+      "type": "reasoning",
+      "gold_doc": "23690",
+      "doc_hit": true,
+      "ibm_hit": false,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "23690"
+    },
+    {
+      "question": "Which stocking location is specified for the manual with literature order number TC-SVF06B-EN?",
+      "type": "lookup",
+      "gold_doc": "23746",
+      "doc_hit": true,
+      "ibm_hit": false,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "23746"
+    },
+    {
+      "question": "What voltage and phase configuration is shown for model sizes 008-014 in the schematic?",
+      "type": "lookup",
+      "gold_doc": "23717",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "23717"
+    },
+    {
+      "question": "For the LGC156H and 180H units, which compressors should continue to operate and which should de-energize when the system is in reheat mode, and which LEDs should remain ON?",
+      "type": "reasoning",
+      "gold_doc": "14300",
+      "doc_hit": true,
+      "ibm_hit": false,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "14300"
+    },
+    {
+      "question": "If four temperature sensors are being averaged, how must they be wired according to the instructions?",
+      "type": "reasoning",
+      "gold_doc": "23690",
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 2,
+      "rr": 0.5,
+      "wrong_v1": true,
+      "top1_doc": "14904"
+    },
+    {
+      "question": "For this model, what is the required action if the TCO1 value does not match the previous tables?",
+      "type": "trap",
+      "gold_doc": "14904",
+      "doc_hit": true,
+      "ibm_hit": false,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "14904"
+    },
+    {
+      "question": "What does the absence of a descriptor (no descriptor) indicate in this model nomenclature?",
+      "type": "lookup",
+      "gold_doc": "16228",
+      "doc_hit": false,
+      "ibm_hit": false,
+      "doc_rank": 0,
+      "rr": 0.0,
+      "wrong_v1": true,
+      "top1_doc": "23717"
+    },
+    {
+      "question": "How does the T-56 sensor differ from the T-55 sensor in terms of features?",
+      "type": "reasoning",
+      "gold_doc": "23690",
+      "doc_hit": true,
+      "ibm_hit": false,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "23690"
+    }
+  ]
+}

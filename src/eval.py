@@ -123,7 +123,7 @@ def run_eval(top_k: int = 5, strategy: str = "best_fields", use_sparse: bool = T
     if out_path:
         out_path.parent.mkdir(parents=True, exist_ok=True)
         out_path.write_text(json.dumps(summary, indent=2))
-        logger.info(f"Results → {out_path}")
+        logger.info(f"Results stored at {out_path}")
 
     return summary
 

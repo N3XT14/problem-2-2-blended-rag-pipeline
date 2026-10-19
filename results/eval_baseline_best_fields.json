@@ -3,32 +3,32 @@
   "strategy": "best_fields",
   "overall": {
     "n": 40,
-    "doc_recall@k": 0.95,
+    "doc_recall@k": 0.875,
     "ibm_recall@k": 0.575,
-    "mrr": 0.7525000000000001,
+    "mrr": 0.7354166666666667,
     "wrong_v1_rate": 0.35
   },
   "by_type": {
     "lookup": {
       "n": 26,
-      "doc_recall@k": 0.9615384615384616,
+      "doc_recall@k": 0.8461538461538461,
       "ibm_recall@k": 0.6538461538461539,
-      "mrr": 0.7192307692307692,
+      "mrr": 0.6762820512820512,
       "wrong_v1_rate": 0.4230769230769231
     },
     "reasoning": {
       "n": 7,
       "doc_recall@k": 1.0,
       "ibm_recall@k": 0.14285714285714285,
-      "mrr": 1.0,
-      "wrong_v1_rate": 0.0
+      "mrr": 0.9285714285714286,
+      "wrong_v1_rate": 0.14285714285714285
     },
     "trap": {
       "n": 7,
       "doc_recall@k": 0.8571428571428571,
       "ibm_recall@k": 0.7142857142857143,
-      "mrr": 0.6285714285714287,
-      "wrong_v1_rate": 0.42857142857142855
+      "mrr": 0.7619047619047619,
+      "wrong_v1_rate": 0.2857142857142857
     }
   },
   "records": [
@@ -49,10 +49,10 @@
       "gold_doc": "14904",
       "doc_hit": true,
       "ibm_hit": false,
-      "doc_rank": 2,
-      "rr": 0.5,
-      "wrong_v1": true,
-      "top1_doc": "23407"
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "14904"
     },
     {
       "question": "Which controller can connect the rooftop unit to an existing BAS without translators or adapter modules and supports BACnet, Modbus, N2, and LonWorks?",
@@ -80,12 +80,12 @@
       "question": "Which accessory is required to achieve low ambient cooling down to 0\u00b0F?",
       "type": "lookup",
       "gold_doc": "16228",
-      "doc_hit": true,
+      "doc_hit": false,
       "ibm_hit": false,
-      "doc_rank": 1,
-      "rr": 1.0,
-      "wrong_v1": false,
-      "top1_doc": "16228"
+      "doc_rank": 0,
+      "rr": 0.0,
+      "wrong_v1": true,
+      "top1_doc": "23720"
     },
     {
       "question": "Which thermostat inputs are used to control the unit according to this manual?",
@@ -104,8 +104,8 @@
       "gold_doc": "23717",
       "doc_hit": true,
       "ibm_hit": true,
-      "doc_rank": 4,
-      "rr": 0.25,
+      "doc_rank": 3,
+      "rr": 0.3333333333333333,
       "wrong_v1": true,
       "top1_doc": "23407"
     },
@@ -126,10 +126,10 @@
       "gold_doc": "16228",
       "doc_hit": true,
       "ibm_hit": true,
-      "doc_rank": 3,
-      "rr": 0.3333333333333333,
-      "wrong_v1": true,
-      "top1_doc": "14904"
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "16228"
     },
     {
       "question": "After verifying that the burners and evaporator fan turn off when lowering the thermostat, under what condition will the fan turn off according to this manual?",
@@ -146,12 +146,12 @@
       "question": "Which models have a line size (O.D. Gas) of 7/8 inches?",
       "type": "lookup",
       "gold_doc": "16228",
-      "doc_hit": true,
+      "doc_hit": false,
       "ibm_hit": false,
-      "doc_rank": 3,
-      "rr": 0.3333333333333333,
+      "doc_rank": 0,
+      "rr": 0.0,
       "wrong_v1": true,
-      "top1_doc": "23233"
+      "top1_doc": "14904"
     },
     {
       "question": "What is the power supply code for 208-230/1/60 in this model nomenclature?",
@@ -159,10 +159,10 @@
       "gold_doc": "16228",
       "doc_hit": true,
       "ibm_hit": true,
-      "doc_rank": 5,
-      "rr": 0.2,
-      "wrong_v1": true,
-      "top1_doc": "23717"
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "16228"
     },
     {
       "question": "Which speed (torque) tap provides an ESP of 0.47 at 1200 CFM?",
@@ -225,8 +225,8 @@
       "gold_doc": "23720",
       "doc_hit": true,
       "ibm_hit": true,
-      "doc_rank": 5,
-      "rr": 0.2,
+      "doc_rank": 3,
+      "rr": 0.3333333333333333,
       "wrong_v1": true,
       "top1_doc": "23717"
     },
@@ -250,7 +250,7 @@
       "doc_rank": 0,
       "rr": 0.0,
       "wrong_v1": true,
-      "top1_doc": "14904"
+      "top1_doc": "23717"
     },
     {
       "question": "What is the factory-set option for Humiditrol unit reheat control parameter 4.24?",
@@ -269,21 +269,21 @@
       "gold_doc": "23281",
       "doc_hit": true,
       "ibm_hit": false,
-      "doc_rank": 1,
-      "rr": 1.0,
-      "wrong_v1": false,
-      "top1_doc": "23281"
+      "doc_rank": 4,
+      "rr": 0.25,
+      "wrong_v1": true,
+      "top1_doc": "14904"
     },
     {
       "question": "What type of shield is required for the cable according to the manual?",
       "type": "lookup",
       "gold_doc": "23690",
-      "doc_hit": false,
-      "ibm_hit": false,
-      "doc_rank": 0,
-      "rr": 0.0,
+      "doc_hit": true,
+      "ibm_hit": true,
+      "doc_rank": 2,
+      "rr": 0.5,
       "wrong_v1": true,
-      "top1_doc": "23717"
+      "top1_doc": "23231"
     },
     {
       "question": "Describe the wiring connection for each freezestat in these units.",
@@ -313,10 +313,10 @@
       "gold_doc": "23720",
       "doc_hit": true,
       "ibm_hit": true,
-      "doc_rank": 2,
-      "rr": 0.5,
-      "wrong_v1": true,
-      "top1_doc": "19138"
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "23720"
     },
     {
       "question": "Which compressor does the UCP start upon each power initialization?",
@@ -357,8 +357,8 @@
       "gold_doc": "23746",
       "doc_hit": true,
       "ibm_hit": false,
-      "doc_rank": 2,
-      "rr": 0.5,
+      "doc_rank": 4,
+      "rr": 0.25,
       "wrong_v1": true,
       "top1_doc": "23267"
     },
@@ -377,10 +377,10 @@
       "question": "Which code in the model number indicates the presence of Demand Control Ventilation (CO2)?",
       "type": "lookup",
       "gold_doc": "14904",
-      "doc_hit": true,
+      "doc_hit": false,
       "ibm_hit": true,
-      "doc_rank": 5,
-      "rr": 0.2,
+      "doc_rank": 0,
+      "rr": 0.0,
       "wrong_v1": true,
       "top1_doc": "23720"
     },
@@ -400,7 +400,7 @@
       "type": "lookup",
       "gold_doc": "23746",
       "doc_hit": true,
-      "ibm_hit": true,
+      "ibm_hit": false,
       "doc_rank": 1,
       "rr": 1.0,
       "wrong_v1": false,
@@ -412,10 +412,10 @@
       "gold_doc": "23717",
       "doc_hit": true,
       "ibm_hit": true,
-      "doc_rank": 1,
-      "rr": 1.0,
-      "wrong_v1": false,
-      "top1_doc": "23717"
+      "doc_rank": 2,
+      "rr": 0.5,
+      "wrong_v1": true,
+      "top1_doc": "16228"
     },
     {
       "question": "For the LGC156H and 180H units, which compressors should continue to operate and which should de-energize when the system is in reheat mode, and which LEDs should remain ON?",
@@ -434,10 +434,10 @@
       "gold_doc": "23690",
       "doc_hit": true,
       "ibm_hit": true,
-      "doc_rank": 1,
-      "rr": 1.0,
-      "wrong_v1": false,
-      "top1_doc": "23690"
+      "doc_rank": 2,
+      "rr": 0.5,
+      "wrong_v1": true,
+      "top1_doc": "14904"
     },
     {
       "question": "For this model, what is the required action if the TCO1 value does not match the previous tables?",
@@ -454,12 +454,12 @@
       "question": "What does the absence of a descriptor (no descriptor) indicate in this model nomenclature?",
       "type": "lookup",
       "gold_doc": "16228",
-      "doc_hit": true,
+      "doc_hit": false,
       "ibm_hit": false,
-      "doc_rank": 3,
-      "rr": 0.3333333333333333,
+      "doc_rank": 0,
+      "rr": 0.0,
       "wrong_v1": true,
-      "top1_doc": "23407"
+      "top1_doc": "23717"
     },
     {
       "question": "How does the T-56 sensor differ from the T-55 sensor in terms of features?",

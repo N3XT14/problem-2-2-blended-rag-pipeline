@@ -178,7 +178,7 @@ def _splade_encode(texts: list[str], tokenizer, model, topk: int, device: str = 
         vals, idxs = torch.topk(vec, k=min(topk, nonzero))
         tokens = tokenizer.convert_ids_to_tokens(idxs.tolist())
         # ES rank_features uses '.' as path separator — drop tokens containing it
-        results.append({t: round(float(v), 4) for t, v in zip(tokens, vals.tolist()) if "." not in t})
+        results.append({t: round(float(v), 4) for t, v in zip(tokens, vals.tolist()) if "." not in t and round(float(v), 4) > 0})
     return results
 
 
@@ -226,6 +226,8 @@ def build_index(chunks_path: Path) -> None:
     logger.info("Indexing sparse ...")
     success, errors = helpers.bulk(client, _sparse_actions(chunks, all_sparse), raise_on_error=False)
     logger.info(f"  Sparse: {success} indexed, {len(errors)} errors")
+    for e in errors[:5]:
+        logger.warning(f"  Sparse error: {e}")
 
     client.indices.refresh(index=f"{INDEX_BM25},{INDEX_KNN},{INDEX_SPARSE}")
     logger.info("Done — all three indexes ready.")

@@ -3,17 +3,17 @@
   "strategy": "match",
   "overall": {
     "n": 40,
-    "doc_recall@k": 0.925,
-    "ibm_recall@k": 0.6,
-    "mrr": 0.7570833333333333,
+    "doc_recall@k": 0.85,
+    "ibm_recall@k": 0.575,
+    "mrr": 0.7320833333333334,
     "wrong_v1_rate": 0.35
   },
   "by_type": {
     "lookup": {
       "n": 26,
-      "doc_recall@k": 0.9615384615384616,
-      "ibm_recall@k": 0.6923076923076923,
-      "mrr": 0.7032051282051283,
+      "doc_recall@k": 0.8461538461538461,
+      "ibm_recall@k": 0.6538461538461539,
+      "mrr": 0.6647435897435898,
       "wrong_v1_rate": 0.46153846153846156
     },
     "reasoning": {
@@ -93,8 +93,8 @@
       "gold_doc": "23690",
       "doc_hit": true,
       "ibm_hit": false,
-      "doc_rank": 2,
-      "rr": 0.5,
+      "doc_rank": 5,
+      "rr": 0.2,
       "wrong_v1": true,
       "top1_doc": "14300"
     },
@@ -104,8 +104,8 @@
       "gold_doc": "23717",
       "doc_hit": true,
       "ibm_hit": true,
-      "doc_rank": 4,
-      "rr": 0.25,
+      "doc_rank": 3,
+      "rr": 0.3333333333333333,
       "wrong_v1": true,
       "top1_doc": "23407"
     },
@@ -126,10 +126,10 @@
       "gold_doc": "16228",
       "doc_hit": true,
       "ibm_hit": true,
-      "doc_rank": 3,
-      "rr": 0.3333333333333333,
+      "doc_rank": 2,
+      "rr": 0.5,
       "wrong_v1": true,
-      "top1_doc": "14904"
+      "top1_doc": "23717"
     },
     {
       "question": "After verifying that the burners and evaporator fan turn off when lowering the thermostat, under what condition will the fan turn off according to this manual?",
@@ -146,12 +146,12 @@
       "question": "Which models have a line size (O.D. Gas) of 7/8 inches?",
       "type": "lookup",
       "gold_doc": "16228",
-      "doc_hit": true,
+      "doc_hit": false,
       "ibm_hit": false,
-      "doc_rank": 3,
-      "rr": 0.3333333333333333,
+      "doc_rank": 0,
+      "rr": 0.0,
       "wrong_v1": true,
-      "top1_doc": "23233"
+      "top1_doc": "14904"
     },
     {
       "question": "What is the power supply code for 208-230/1/60 in this model nomenclature?",
@@ -250,7 +250,7 @@
       "doc_rank": 0,
       "rr": 0.0,
       "wrong_v1": true,
-      "top1_doc": "14904"
+      "top1_doc": "23690"
     },
     {
       "question": "What is the factory-set option for Humiditrol unit reheat control parameter 4.24?",
@@ -269,21 +269,21 @@
       "gold_doc": "23281",
       "doc_hit": true,
       "ibm_hit": false,
-      "doc_rank": 1,
-      "rr": 1.0,
-      "wrong_v1": false,
-      "top1_doc": "23281"
+      "doc_rank": 2,
+      "rr": 0.5,
+      "wrong_v1": true,
+      "top1_doc": "14904"
     },
     {
       "question": "What type of shield is required for the cable according to the manual?",
       "type": "lookup",
       "gold_doc": "23690",
       "doc_hit": true,
-      "ibm_hit": false,
-      "doc_rank": 3,
-      "rr": 0.3333333333333333,
-      "wrong_v1": true,
-      "top1_doc": "14904"
+      "ibm_hit": true,
+      "doc_rank": 1,
+      "rr": 1.0,
+      "wrong_v1": false,
+      "top1_doc": "23690"
     },
     {
       "question": "Describe the wiring connection for each freezestat in these units.",
@@ -357,8 +357,8 @@
       "gold_doc": "23746",
       "doc_hit": true,
       "ibm_hit": false,
-      "doc_rank": 2,
-      "rr": 0.5,
+      "doc_rank": 4,
+      "rr": 0.25,
       "wrong_v1": true,
       "top1_doc": "23267"
     },
@@ -377,10 +377,10 @@
       "question": "Which code in the model number indicates the presence of Demand Control Ventilation (CO2)?",
       "type": "lookup",
       "gold_doc": "14904",
-      "doc_hit": true,
+      "doc_hit": false,
       "ibm_hit": true,
-      "doc_rank": 5,
-      "rr": 0.2,
+      "doc_rank": 0,
+      "rr": 0.0,
       "wrong_v1": true,
       "top1_doc": "23720"
     },
@@ -400,7 +400,7 @@
       "type": "lookup",
       "gold_doc": "23746",
       "doc_hit": true,
-      "ibm_hit": true,
+      "ibm_hit": false,
       "doc_rank": 1,
       "rr": 1.0,
       "wrong_v1": false,
@@ -454,12 +454,12 @@
       "question": "What does the absence of a descriptor (no descriptor) indicate in this model nomenclature?",
       "type": "lookup",
       "gold_doc": "16228",
-      "doc_hit": true,
-      "ibm_hit": true,
-      "doc_rank": 3,
-      "rr": 0.3333333333333333,
+      "doc_hit": false,
+      "ibm_hit": false,
+      "doc_rank": 0,
+      "rr": 0.0,
       "wrong_v1": true,
-      "top1_doc": "23407"
+      "top1_doc": "23717"
     },
     {
       "question": "How does the T-56 sensor differ from the T-55 sensor in terms of features?",

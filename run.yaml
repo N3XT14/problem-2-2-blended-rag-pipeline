@@ -1,7 +1,7 @@
 setup_commands:
   - "pip install -r requirements.txt"
   - "docker compose up -d"
-  - "docker compose wait elasticsearch || sleep 30"
+  - "until curl -s http://localhost:9200 > /dev/null; do sleep 2; done"
 
 run_commands:
   - "python src/ingest.py --corpus data/corpus/ --out data/chunks.json"
@@ -11,4 +11,4 @@ run_commands:
 test_commands:
   - "python src/eval.py --top-k 5 --strategy best_fields --out results/eval_results.json"
 
-notes: "Requires Docker for Elasticsearch 9.0.3. PDFs are in data/corpus/ (15 files, committed). Ingest ~2 min. Index build ~15 min on CPU or ~2 min on GPU (code auto-detects CUDA via torch.cuda.is_available()). Eval ~2 min. GPU path not tested — requires Docker and CUDA on the same machine."
+notes: "Requires Docker for Elasticsearch 9.0.3. PDFs are in data/corpus/ (15 files, committed). chunks.json is pre-committed — ingest.py skips chunking automatically if it exists (saves ~15 min); pass --force to re-run. Index build ~17 min on CPU (SPLADE encoding, depends on chunk count) or faster on GPU (code auto-detects CUDA). Eval ~2 min. GPU path not tested — requires Docker and CUDA on the same machine."
