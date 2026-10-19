@@ -141,6 +141,8 @@ Both retrieve the right answer. SPLADE additionally surfaces the same section fr
 
 ## Results After Adding SPLADE
 
+![Baseline vs SPLADE](eval_comparison.png)
+
 **best_fields strategy:**
 - doc_recall@5: 0.875 to **0.925** (+5.0pp)
 - MRR: 0.735 to **0.765** (+3.0pp)
